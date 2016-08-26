@@ -39,6 +39,7 @@
 
     <!-- Package as an executable jar -->
     <build>
+        <finalName>tm-devjam</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
