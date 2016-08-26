@@ -1,9 +1,9 @@
 package com.epam.tmdevjam.web;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Kiryl Dubarenka
@@ -12,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class Example {
 
-    @GetMapping
-    public ModelAndView list() {
-        return new ModelAndView("index");
+    @RequestMapping(method = RequestMethod.GET)
+    public String list(Model model) {
+        return "example/list";
     }
 
 }
