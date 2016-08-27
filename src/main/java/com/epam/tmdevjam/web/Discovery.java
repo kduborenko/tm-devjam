@@ -31,4 +31,6 @@ public class Discovery {
         operation.keyword(keyword);
         return discoveryFacade.searchEvents(operation);
     }
+
+
 }
