@@ -32,7 +32,7 @@ TicketPathApp
                         .setAttribute("style", "background-image: url(" + response.data.mainImageUrl + ")")
                 });
                 $http.get('/discovery/timeline/' + item.id).then(function(response) {
-                    console.log('event', response);
+                    console.log('event', response.data);
                     $scope.group.events = response.data;
                 });
             } else {
@@ -43,7 +43,7 @@ TicketPathApp
 
         $scope.selectEvent = function(event) {
             console.log('selectEvent', event)
-            $scope.group.events.forEach(function(item) { item.selected = false});
-            event.selected = true;
+            $scope.group.events.forEach(function(item) { item.isSelected = false});
+            event.isSelected = true;
         };
     });
