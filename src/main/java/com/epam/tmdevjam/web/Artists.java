@@ -74,10 +74,7 @@ public class Artists {
 
 
     private static Artist createArtist(Attraction attraction) {
-        Artist artist = new Artist();
-        artist.setId(attraction.getId());
-        artist.setName(attraction.getName());
-        return artist;
+        return createArtist(attraction, false);
     }
 
     private boolean removeUndefinedGenre(Attraction attraction) {
@@ -91,7 +88,17 @@ public class Artists {
 
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Attraction attraction(@PathVariable String id) throws IOException {
-        return discoveryFacade.getAttraction(id);
+    public Artist attraction(@PathVariable String id) throws IOException {
+        return createArtist(discoveryFacade.getAttraction(id), true);
+    }
+
+    private static Artist createArtist(Attraction attraction, boolean addAttractionInfo) {
+        Artist artist = new Artist();
+        artist.setId(attraction.getId());
+        artist.setName(attraction.getName());
+        if (addAttractionInfo) {
+            artist.setAttraction(attraction);
+        }
+        return artist;
     }
 }
