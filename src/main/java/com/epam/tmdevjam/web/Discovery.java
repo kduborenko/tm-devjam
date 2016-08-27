@@ -8,13 +8,10 @@ import com.ticketmaster.discovery.model.Event;
 import com.ticketmaster.discovery.model.Events;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,6 +33,9 @@ public class Discovery {
     @Value("${ticketMaster.mainCategory}")
     private String category;
 
+    @Value("${ticketMaster.undefinedGenre}")
+    private String undefinedGenre;
+
     @RequestMapping(method = RequestMethod.GET)
     public PagedResponse<Events> list(@RequestParam(required = false) String keyword) throws IOException {
         SearchEventsOperation operation = new SearchEventsOperation();
@@ -43,25 +43,31 @@ public class Discovery {
         return discoveryFacade.searchEvents(operation);
     }
 
-    @RequestMapping(value = "timeline", method = RequestMethod.GET)
-    public Map<Date, List<Event>> timeline(@RequestParam(required = false) String keyword) throws IOException {
+    @RequestMapping(value = "timeline/{name}", method = RequestMethod.GET)
+    public List<Event> timeline(@PathVariable String name) throws IOException {
         SearchEventsOperation operation = new SearchEventsOperation();
-        operation.keyword(keyword);
+        operation.keyword(name);
+        operation.withParam("source", "ticketmaster");
+        operation.withParam("classificationId", category);
         PagedResponse<Events> list = discoveryFacade.searchEvents(operation);
 
         Map<Date, List<Event>> byDate = list.getContent()
                 .getEvents()
                 .stream()
-                .filter(this::checkClassification)
+                .filter(this::removeUndefinedGenre)
                 .collect(Collectors.groupingBy((event) -> event.getDates()));
 
-        return byDate;
+        return byDate.entrySet()
+                .stream()
+                .sorted(Comparator.comparing(e1 -> e1.getKey().getStart().getDateTime()))
+                .flatMap(e1 -> e1.getValue().stream())
+                .collect(Collectors.toList());
     }
 
-    private boolean checkClassification(Event e) {
+    private boolean removeUndefinedGenre(Event e) {
         return e.getClassifications()
                 .stream()
-                .filter(c -> this.category.equals(c.getSegment().getId()))
+                .filter(c -> !this.undefinedGenre.equals(c.getGenre().getId()))
                 .findAny()
                 .isPresent();
     }
