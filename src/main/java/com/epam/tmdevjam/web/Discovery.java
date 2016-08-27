@@ -43,12 +43,12 @@ public class Discovery {
         return discoveryFacade.searchEvents(operation);
     }
 
-    @RequestMapping(value = "timeline/{name}", method = RequestMethod.GET)
-    public List<Event> timeline(@PathVariable String name) throws IOException {
+    @RequestMapping(value = "timeline/{attractionId}", method = RequestMethod.GET)
+    public List<Event> timeline(@PathVariable String attractionId) throws IOException {
         SearchEventsOperation operation = new SearchEventsOperation();
-        operation.keyword(name);
         operation.withParam("source", "ticketmaster");
         operation.withParam("classificationId", category);
+        operation.attractionId(attractionId);
         PagedResponse<Events> list = discoveryFacade.searchEvents(operation);
 
         Map<Date, List<Event>> byDate = list.getContent()
@@ -60,7 +60,7 @@ public class Discovery {
         return byDate.entrySet()
                 .stream()
                 .sorted(Comparator.comparing(e1 -> e1.getKey().getStart().getDateTime()))
-                .flatMap(e1 -> e1.getValue().stream())
+                .map(e1 -> e1.getValue().get(0)) // todo find main event
                 .collect(Collectors.toList());
     }
 
