@@ -1,3 +1,6 @@
+var renderPoints = function() {
+}
+
 TicketPathApp
     .component('mapComponent', {
         template:
@@ -191,11 +194,27 @@ TicketPathApp
                 strokeWeight: 1
               };
 
-              var marker = new google.maps.Marker({
-                position: self.map.getCenter(),
-                icon: goldStar,
-                map: self.map
-              });
+//              var marker = new google.maps.Marker({
+//                position: self.map.getCenter(),
+//                icon: goldStar,
+//                map: self.map
+//              });
+
+              renderPoints = function(data) {
+                for (var i=0; i<data.length; i++) {
+                    var e = data[i];
+                    if (e.venues && e.venues[0]) {
+                        var location = e.venues[0].location;
+                    new google.maps.Marker({
+                                                   position: new google.maps.LatLng(location.latitude, location.longitude),
+                                                   icon: goldStar,
+                                                   map: self.map
+                                               });
+                    }
+
+                }
+                //alert(data);
+              }
 
 //            this.markers = [];
 //

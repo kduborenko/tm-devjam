@@ -34,6 +34,7 @@ TicketPathApp
                 $http.get('/discovery/timeline/' + item.id).then(function(response) {
                     console.log('event', response.data);
                     $scope.group.events = response.data;
+                    renderPoints($scope.group.events);
                 });
             } else {
                 console.error('item not found');
