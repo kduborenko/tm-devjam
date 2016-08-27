@@ -9,16 +9,10 @@ import com.ticketmaster.discovery.model.Attraction;
 import com.ticketmaster.discovery.model.Attractions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -70,6 +64,7 @@ public class Artists {
                 .stream()
                 .filter(this::isMusic)
                 .filter(this::removeUndefinedGenre)
+                .sorted(Comparator.comparing(Attraction::getName))
                 .collect(Collectors.toList());
     }
 
@@ -95,5 +90,12 @@ public class Artists {
                 .filter(c -> !this.undefinedGenre.equals(c.getGenre().getId()))
                 .findAny()
                 .isPresent();
+    }
+
+
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public Attraction attraction(@PathVariable String id) throws IOException {
+        return discoveryFacade.getAttraction(id);
     }
 }

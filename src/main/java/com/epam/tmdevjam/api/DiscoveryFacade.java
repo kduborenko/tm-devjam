@@ -1,6 +1,7 @@
 package com.epam.tmdevjam.api;
 
 import com.ticketmaster.api.discovery.DiscoveryApi;
+import com.ticketmaster.api.discovery.operation.ByIdOperation;
 import com.ticketmaster.api.discovery.operation.SearchAttractionsOperation;
 import com.ticketmaster.api.discovery.operation.SearchEventsOperation;
 import com.ticketmaster.api.discovery.response.PagedResponse;
@@ -60,4 +61,13 @@ public class DiscoveryFacade {
         }
     }
 
+    public Attraction getAttraction(String id) {
+        ByIdOperation operation = new ByIdOperation();
+        operation.id(id);
+        try {
+            return api.getAttraction(operation).getContent();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
 }
