@@ -33,7 +33,14 @@
 
         .sidebar-events {
             background-color: #202020 !important;
+            padding: 0;
+            margin: 0;
         }
+        .sidebar-events-list {
+            padding: 0;
+            margin: 0;
+        }
+
         .map-background {
             background-color: #2b2b2b !important;
         }
@@ -45,6 +52,10 @@
             background-color: #e01d35 !important;
         }
 
+        .md-sidenav-left {
+            background-color: #202020 !important;
+        }
+
         #map-container {
             width: 1400px;
             height: 900px;
@@ -52,6 +63,20 @@
 
         .md-sidenav-left .md-list-item-text * {
             color: white !important;
+        }
+
+        .group-event .md-button {
+            position: absolute;
+            height: 90px;
+            left: 0
+        }
+
+        .group-event .md-button button {
+            height: 90px;
+        }
+
+        .group-event .md-list-item-text {
+            margin-top: 8px !important;
         }
     </style>
 </head>
@@ -90,11 +115,11 @@
                 md-is-locked-open="$mdMedia('gt-md')"
                 md-whiteframe="4">
             <md-content layout-padding class="sidebar-events">
-                <md-list flex>
+                <md-list flex class="sidebar-events-list">
                     <md-list-item class="md-3-line group-event {{ event.isSelected ? 'selected' : '' }}"
-                                  ng-repeat="event in group.events"
-                                  ng-click="selectEvent(event)">
-                        <div class="md-list-item-text" layout="column">
+                                  ng-repeat="event in group.events" ng-click="selectEvent(event)">
+                        <div class="md-list-item-text" layout="column"
+                             >
                             <h3>{{ event.name }}</h3>
                             <h4>{{ event.dates.start.localDate }}</h4>
                             <p>{{ event.venues[0].city.name }} {{ event.venues[0].state.stateCode }} {{ event.venues[0].venues.country }}</p>
