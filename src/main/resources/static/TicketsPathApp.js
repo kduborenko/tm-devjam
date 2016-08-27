@@ -12,11 +12,7 @@ TicketPathApp
 
         $scope.group = {};
         $scope.group.groupTitle = 'AC/DC';
-        $scope.group.events = [
-            { title: 'One concert', selected: false },
-            { title: 'Another concert', selected: true },
-            { title: 'Another 1', selected: false }
-        ];
+        $scope.group.events = [];
 
         $scope.selectedItem = '';
 
@@ -30,10 +26,19 @@ TicketPathApp
 
         $scope.selectedItemChange = function(item) {
             $scope.selectedItem = item;
-            $http.get('/artists/' + item.id).then(function(response) {
-                console.log('event', response);
+            if (item) {
+                $http.get('/artists/' + item.id).then(function(response) {
+                    document.getElementById('background-artist')
+                        .setAttribute("style", "background-image: url(" + response.data.mainImageUrl + ")")
+                });
+                $http.get('/discovery/timeline/' + item.id).then(function(response) {
+                    console.log('event', response);
+                    $scope.group.events = response.data;
+                });
+            } else {
+                console.error('item not found');
+            }
 
-            });
         };
 
         $scope.selectEvent = function(event) {
