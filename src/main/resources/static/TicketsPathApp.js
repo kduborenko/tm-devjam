@@ -1,4 +1,6 @@
-angular.module('TicketPathApp', ['ngMaterial'])
+var TicketPathApp = angular.module('TicketPathApp', ['ngMaterial']);
+
+TicketPathApp
     .controller('TicketCtrl', function($scope) {
         $scope.message = 'Message scope!';
         $scope.buttonTitle = 'Goooo!';
