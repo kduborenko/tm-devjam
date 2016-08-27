@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"/>
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css"/>
+    
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -16,13 +17,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
 
-    <script src="//maps.googleapis.com/maps/api/js?language=en"></script>
-    <style>
-    #map-container {
-        width: 1400px;
-        height: 900px;
-    }
-    </style>
+    <script src="//maps.googleapis.com/maps/api/js" async defer></script>
 </head>
 <body ng-app="TicketPathApp" ng-controller="TicketCtrl">
     <md-toolbar class="md-hue-2">
@@ -71,6 +66,7 @@
             </div>
         </md-content>
     </div>
+
     <script src="../../static/TicketsPathApp.js" th:src="@{/TicketsPathApp.js}"></script>
     <script src="../../static/CtrlApp.js" th:src="@{/CtrlApp.js}"></script>
     <script src="../../static/MapCtrl.js" th:src="@{/mapComponent.js}"></script>
