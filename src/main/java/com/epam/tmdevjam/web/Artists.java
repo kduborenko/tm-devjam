@@ -22,6 +22,28 @@ import java.util.stream.Collectors;
 public class Artists {
     public static final String PARAM_CLASSIFICATION = "classificationId";
     public static final String CLASSIFICATION_MUSIC_ID = "KZFzniwnSyZfZ7v7nJ";
+    private static Map<String, String> artistsImagesMap = new HashMap<>();
+
+    private static final String BASE_URL = "/images/";
+    public static final String IMG_BLACK_SABBATH = BASE_URL + "blacksabbath.jpg";
+    public static final String IMG_COLDPLAY = BASE_URL + "coldplay.jpg";
+    public static final String IMG_SLAYER = BASE_URL + "slayer.jpg";
+    public static final String IMG_BEYONCE = BASE_URL + "beyonce.jpg";
+    public static final String IMG_MEGHAN_TRAINOR = BASE_URL + "coldplay.jpg";
+
+
+    static {
+        artistsImagesMap.put("K8vZ9178vQV", IMG_COLDPLAY);
+        artistsImagesMap.put("K8vZ9174pc7", IMG_SLAYER);
+        artistsImagesMap.put("K8vZ9175rX7", IMG_BEYONCE);
+        artistsImagesMap.put("K8vZ91715h0", IMG_BLACK_SABBATH);
+        artistsImagesMap.put("K8vZ9171izV", IMG_COLDPLAY);
+        artistsImagesMap.put("K8vZ917ol1f", IMG_BEYONCE);
+        artistsImagesMap.put("K8vZ9173ReV", IMG_MEGHAN_TRAINOR);
+        artistsImagesMap.put("K8vZ9171G_0", IMG_SLAYER);
+        artistsImagesMap.put("K8vZ917C2j0", IMG_SLAYER);
+        artistsImagesMap.put("K8vZ917G4S0", IMG_SLAYER);
+    }
 
     @Value("${ticketMaster.mainCategory}")
     private String category;
@@ -98,6 +120,14 @@ public class Artists {
         artist.setName(attraction.getName());
         if (addAttractionInfo) {
             artist.setAttraction(attraction);
+            if (artistsImagesMap.containsKey(attraction.getId())){
+                artist.setMainImageUrl(artistsImagesMap.get(attraction.getId()));
+            } else {
+                if (attraction.getImages()!=null && attraction.getImages().size()>0){
+                    //ToDo: select best image
+                    artist.setMainImageUrl(attraction.getImages().get(0).getUrl());
+                }
+            }
         }
         return artist;
     }

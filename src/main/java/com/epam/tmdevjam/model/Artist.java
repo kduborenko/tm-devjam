@@ -11,6 +11,8 @@ import com.ticketmaster.discovery.model.Attraction;
 public class Artist {
     private String id;
     private String name;
+    private String mainImageUrl;
+    private String info;
     private Attraction attraction;
 
     public String getId() {
@@ -35,5 +37,21 @@ public class Artist {
 
     public void setAttraction(Attraction attraction) {
         this.attraction = attraction;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }
