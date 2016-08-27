@@ -1,6 +1,7 @@
 package com.epam.tmdevjam.web;
 
 import com.epam.tmdevjam.api.DiscoveryFacade;
+import com.epam.tmdevjam.api.DiscoveryUtils;
 import com.ticketmaster.api.discovery.operation.SearchEventsOperation;
 import com.ticketmaster.api.discovery.response.PagedResponse;
 import com.ticketmaster.discovery.model.Date;
@@ -49,16 +50,17 @@ public class Discovery {
         operation.withParam("source", "ticketmaster");
         operation.withParam("classificationId", category);
         operation.attractionId(attractionId);
-        PagedResponse<Events> list = discoveryFacade.searchEvents(operation);
+        //PagedResponse<Events> list = discoveryFacade.searchEvents(operation);
 
-        Map<Date, List<Event>> byDate = list.getContent()
-                .getEvents()
+        Map<Date, List<Event>> byDate = DiscoveryUtils.loadAllEvents(discoveryFacade, operation)
+                //.getEvents()
                 .stream()
                 .filter(this::removeUndefinedGenre)
                 .collect(Collectors.groupingBy((event) -> event.getDates()));
 
         return byDate.entrySet()
                 .stream()
+                .filter(e1 -> e1.getKey().getStart().getDateTime() != null)
                 .sorted(Comparator.comparing(e1 -> e1.getKey().getStart().getDateTime()))
                 .map(e1 -> e1.getValue().get(0)) // todo find main event
                 .collect(Collectors.toList());

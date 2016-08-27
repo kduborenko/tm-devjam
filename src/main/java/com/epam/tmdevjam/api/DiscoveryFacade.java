@@ -1,36 +1,21 @@
 package com.epam.tmdevjam.api;
 
-import com.ticketmaster.api.discovery.DiscoveryApi;
-import com.ticketmaster.api.discovery.operation.SearchAttractionsOperation;
 import com.ticketmaster.api.discovery.operation.SearchEventsOperation;
 import com.ticketmaster.api.discovery.response.PagedResponse;
-import com.ticketmaster.discovery.model.Attractions;
+import com.ticketmaster.discovery.model.Attraction;
 import com.ticketmaster.discovery.model.Events;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: D. Kulakhmetov
- * Date: 27.08.2016
- * Time: 13:17
+ * @author Kiryl Dubarenka
  */
-@Service
-public class DiscoveryFacade {
-    private DiscoveryApi api;
+public interface DiscoveryFacade {
+    PagedResponse<Events> searchEvents(SearchEventsOperation operation) throws IOException;
 
-    private DiscoveryFacade(@Value("${ticketMaster.apiKey}") String apiKey) {
-        api = new DiscoveryApi(apiKey);
-    }
+    List<Attraction> searchAttractions() throws IOException;
 
-    public PagedResponse<Events> searchEvents(SearchEventsOperation operation) throws IOException {
-        return api.searchEvents(operation);
-    }
-
-    public PagedResponse<Attractions> searchAttractions(SearchAttractionsOperation operation) throws IOException {
-        return api.searchAttractions(operation);
-    }
+    Attraction getAttraction(String id);
 }
