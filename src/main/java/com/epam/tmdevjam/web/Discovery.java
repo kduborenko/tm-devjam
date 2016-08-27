@@ -60,6 +60,7 @@ public class Discovery {
 
         return byDate.entrySet()
                 .stream()
+                .filter(e1 -> e1.getKey().getStart().getDateTime() != null)
                 .sorted(Comparator.comparing(e1 -> e1.getKey().getStart().getDateTime()))
                 .map(e1 -> e1.getValue().get(0)) // todo find main event
                 .collect(Collectors.toList());
