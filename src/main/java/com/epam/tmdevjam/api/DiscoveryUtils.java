@@ -1,10 +1,7 @@
 package com.epam.tmdevjam.api;
 
-import com.ticketmaster.api.discovery.operation.SearchAttractionsOperation;
 import com.ticketmaster.api.discovery.operation.SearchEventsOperation;
 import com.ticketmaster.api.discovery.response.PagedResponse;
-import com.ticketmaster.discovery.model.Attraction;
-import com.ticketmaster.discovery.model.Attractions;
 import com.ticketmaster.discovery.model.Event;
 import com.ticketmaster.discovery.model.Events;
 

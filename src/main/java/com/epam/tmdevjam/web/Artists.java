@@ -1,12 +1,8 @@
 package com.epam.tmdevjam.web;
 
 import com.epam.tmdevjam.api.DiscoveryFacade;
-import com.epam.tmdevjam.api.DiscoveryUtils;
 import com.epam.tmdevjam.model.Artist;
-import com.ticketmaster.api.discovery.operation.SearchAttractionsOperation;
-import com.ticketmaster.api.discovery.response.PagedResponse;
 import com.ticketmaster.discovery.model.Attraction;
-import com.ticketmaster.discovery.model.Attractions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
