@@ -53,36 +53,4 @@ public class DiscoveryUtils {
         return allEvents;
     }
 
-    public static List<Attraction> loadAllAttractions(DiscoveryFacade discoveryFacade, SearchAttractionsOperation operation) throws IOException {
-        List<Attraction> allAttractions = new ArrayList<>();
-        operation.pageSize(PAGE_SIZE);
-        Integer totalElements = null;
-        Integer pageNumber = 0;
-        while(totalElements == null || allAttractions.size()<totalElements){
-            operation.pageNumber(pageNumber);
-            PagedResponse<Attractions> pagedResponse = discoveryFacade.searchAttractions(operation);
-            if (pagedResponse == null){
-                break;
-            }
-            Attractions attractionsWrapper = pagedResponse.getContent();
-            if (attractionsWrapper==null){
-                break;
-            }
-            List<Attraction> attractions = attractionsWrapper.getAttractions();
-            if (attractions!=null && attractions.size()>0){
-                allAttractions.addAll(attractions);
-            }
-            if (pagedResponse.getPageInfo()==null){
-                break;
-            }
-            if (totalElements==null){
-                totalElements = pagedResponse.getPageInfo().getTotalElements();
-            }
-            if (totalElements==null){
-                break;
-            }
-            pageNumber++;
-        }
-        return allAttractions;
-    }
 }
