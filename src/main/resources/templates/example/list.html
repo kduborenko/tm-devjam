@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Tickets Path App</title>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="../../static/test.js" th:src="@{/test.js}"></script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css"/>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
+
+    <script src="//maps.googleapis.com/maps/api/js" async defer></script>
 </head>
-<body>
-Test! Test!
+<body ng-app="TicketPathApp" ng-controller="TicketCtrl">
+  <md-content>
+    <h1>Tickets Path App</h1>
+    <p>{{ message }}</p>
+
+      <md-button>{{buttonTitle}}</md-button>
+  </md-content>
+
+<script src="../../static/TicketsPathApp.js" th:src="@{/TicketsPathApp.js}"></script>
+<script src="../../static/CtrlApp.js" th:src="@{/CtrlApp.js}"></script>
 </body>
 </html>
