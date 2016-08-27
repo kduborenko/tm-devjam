@@ -1,5 +1,6 @@
 package com.epam.tmdevjam.web;
 
+import com.epam.tmdevjam.api.ArtistDetails;
 import com.epam.tmdevjam.api.DiscoveryFacade;
 import com.epam.tmdevjam.model.Artist;
 import com.ticketmaster.discovery.model.Attraction;
@@ -54,6 +55,9 @@ public class Artists {
     @Autowired
     private DiscoveryFacade discoveryFacade;
 
+    @Autowired
+    private ArtistDetails artistDetails;
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Artist> groups(@RequestParam(required = false) String keyword) throws IOException {
         //operation.withParam(PARAM_CLASSIFICATION, CLASSIFICATION_MUSIC_ID);
@@ -95,7 +99,7 @@ public class Artists {
     }
 
 
-    private static Artist createArtist(Attraction attraction) {
+    private Artist createArtist(Attraction attraction) {
         return createArtist(attraction, false);
     }
 
@@ -114,11 +118,12 @@ public class Artists {
         return createArtist(discoveryFacade.getAttraction(id), true);
     }
 
-    private static Artist createArtist(Attraction attraction, boolean addAttractionInfo) {
+    private Artist createArtist(Attraction attraction, boolean addAttractionInfo) {
         Artist artist = new Artist();
         artist.setId(attraction.getId());
         artist.setName(attraction.getName());
         if (addAttractionInfo) {
+            artist.setInfo(artistDetails.getBio(attraction.getName()));
             artist.setAttraction(attraction);
             if (artistsImagesMap.containsKey(attraction.getId())){
                 artist.setMainImageUrl(artistsImagesMap.get(attraction.getId()));
