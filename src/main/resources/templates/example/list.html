@@ -1,11 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Tickets Path App</title>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="../../static/test.js" th:src="@{/test.js}"></script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css"/>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
+
+    <script src="//maps.googleapis.com/maps/api/js" async defer></script>
 </head>
-<body>
-Test! Test!
+<body ng-app="TicketPathApp" ng-controller="TicketCtrl">
+    <md-toolbar class="md-hue-2">
+        <div class="md-toolbar-tools" layout="row">
+            <span flex>Tickets Path App, test change</span>
+            <span flex></span>
+
+            <md-autocomplete
+                    flext
+                    md-selected-item="TicketCtrl.selectedItem"
+                    md-search-text-change="TicketCtrl.searchTextChange(TicketCtrl.searchText)"
+                    md-search-text="TicketCtrl.searchText"
+                    md-selected-item-change="TicketCtrl.selectedItemChange(item)"
+                    md-items="item in TicketCtrl.querySearch(TicketCtrl.searchText)"
+                    md-item-text="item.display"
+                    md-min-length="0"
+                    placeholder="What are you looking for?">
+                <md-item-template>
+                    <span md-highlight-text="TicketCtrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                </md-item-template>
+                <md-not-found>
+                    No events for "{{ctrl.searchText}}" were found.
+                </md-not-found>
+            </md-autocomplete>
+        </div>
+    </md-toolbar>
+
+    <div layout="row">
+        <md-sidenav
+                class="md-sidenav-left"
+                md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-md')"
+                md-whiteframe="4">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">{{ group.groupTitle }}</h1>
+            </md-toolbar>
+            <md-content layout-padding>
+                <p ng-repeat="event in group.events">
+                    {{ event.title }}
+                </p>
+            </md-content>
+        </md-sidenav>
+        <md-content>
+            <div id="mapElementHere">
+                Here map should be placed!
+            </div>
+        </md-content>
+    </div>
+
+<script src="../../static/TicketsPathApp.js" th:src="@{/TicketsPathApp.js}"></script>
+<script src="../../static/CtrlApp.js" th:src="@{/CtrlApp.js}"></script>
 </body>
 </html>
