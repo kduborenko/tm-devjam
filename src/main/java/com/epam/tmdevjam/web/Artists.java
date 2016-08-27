@@ -1,6 +1,7 @@
 package com.epam.tmdevjam.web;
 
 import com.epam.tmdevjam.api.DiscoveryFacade;
+import com.epam.tmdevjam.api.DiscoveryUtils;
 import com.epam.tmdevjam.model.Artist;
 import com.ticketmaster.api.discovery.operation.SearchAttractionsOperation;
 import com.ticketmaster.api.discovery.operation.SearchEventsOperation;
@@ -29,7 +30,6 @@ import java.util.*;
 public class Artists {
     public static final String PARAM_CLASSIFICATION = "classificationId";
     public static final String CLASSIFICATION_MUSIC_ID = "KZFzniwnSyZfZ7v7nJ";
-    public static final int PAGE_SIZE = 100000;
 
     @Autowired
     private DiscoveryFacade discoveryFacade;
@@ -44,7 +44,7 @@ public class Artists {
         //ToDo: search in attration by classification
         Set<String> groupIds = new HashSet<String>();
         List<Artist> artists = new ArrayList<Artist>();
-        List<Attraction> attractions = loadAllAttractions(operation);
+        List<Attraction> attractions = DiscoveryUtils.loadAllAttractions(discoveryFacade, operation);
         if (attractions!=null && attractions.size()>0){
             for(Attraction attraction:attractions){
                 String artistId = attraction.getId();
@@ -57,19 +57,7 @@ public class Artists {
         return artists;
     }
 
-    private List<Attraction> loadAllAttractions(SearchAttractionsOperation operation) throws IOException {
-        List<Attraction> allAttractions = new ArrayList<Attraction>();
-        Integer pageNumber = 0;
-        operation.pageNumber(pageNumber);
-        operation.pageSize(PAGE_SIZE);
-        PagedResponse<Attractions> pagedResponse = discoveryFacade.searchAttractions(operation);
-        Attractions itemsWrapper = pagedResponse.getContent();
-        List<Attraction> attractions = itemsWrapper.getAttractions();
-        if (attractions!=null && attractions.size()>0){
-            allAttractions.addAll(attractions);
-        }
-        return allAttractions;
-    }
+
 
 
 
